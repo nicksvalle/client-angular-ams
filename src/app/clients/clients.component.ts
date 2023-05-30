@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../client';
 import { ClientService } from './../client.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,16 +11,13 @@ import { Component, OnInit } from '@angular/core';
 export class ClientsComponent implements OnInit {
 
   clients : Client[] = [];
+  client : Client = {} as Client;
   isEditing : boolean = false;
-  formGroupClient : FormGroup;
+
+
 
   constructor (private ClientService: ClientService,  private formBuilder : FormBuilder){
 
-    this.formGroupClient = formBuilder.group({
-      id : [''],
-      name : [''],
-      email : ['']
-    });
   }
 
   ngOnInit(): void {
@@ -35,38 +32,35 @@ export class ClientsComponent implements OnInit {
     );
   }
 
-  save(){
-    if(this.isEditing)
-    {
-      this.ClientService.update(this.formGroupClient.value).subscribe(
-        {
-          next: () => {
-            this.loadClients();
-            this.formGroupClient.reset();
-            this.isEditing = false;
+  onSaveEvent(client : Client){
+      if(this.isEditing)
+      {
+        this.ClientService.update(client).subscribe(
+          {
+            next: () => {
+              this.loadClients();
+              this.isEditing = false;
+            }
           }
-        }
-      )
-    }
-    else{
-      this.ClientService.save(this.formGroupClient.value).subscribe(
-        {
-          next: data => {
-            this.clients.push(data);
-            this.formGroupClient.reset();
+        )
+      }
+      else{
+        this.ClientService.save(client).subscribe(
+          {
+            next: data => {
+              this.clients.push(data);
+            }
           }
-        }
-        );
-    }
+          );
+      }
+
+
  }
 
-  clean(){
-    this.formGroupClient.reset();
-    this.isEditing = false;
-  }
+
 
   edit(client : Client){
-    this.formGroupClient.setValue(client);
+    this.client =  client;
     this.isEditing = true;
   }
 
@@ -77,4 +71,10 @@ export class ClientsComponent implements OnInit {
   }
 
 
+
+
+
 }
+
+
+
