@@ -1,14 +1,19 @@
 {
   "clients": [
     {
-      "id": 1,
-      "name": "Nicolas Valle",
-      "email": "nicolas@gmail.com"
-    },
-    {
       "id": 2,
       "name": "Julio",
       "email": "julio@gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "Kaue",
+      "email": "kaue@gmail.com"
+    },
+    {
+      "id": 4,
+      "name": "William",
+      "email": "will@hotmail.com"
     }
   ]
 }
